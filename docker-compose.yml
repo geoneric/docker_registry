@@ -1,0 +1,14 @@
+restart: always
+    image: registry:2
+    ports:
+        - 5000:5000
+    environment:
+        REGISTRY_HTTP_TLS_CERTIFICATE: /certs/fullchain.pem
+        REGISTRY_HTTP_TLS_KEY: /certs/privkey.pem
+        REGISTRY_AUTH: htpasswd
+        REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+        REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+        - ${DOCKER_REGISTRY_DATA}:/var/lib/registry
+        - ${DOCKER_REGISTRY_CERTS}:/certs
+        - ${DOCKER_REGISTRY_AUTH}:/auth
